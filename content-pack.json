@@ -1,0 +1,147 @@
+{
+  "extractors": [
+    {
+      "condition_type": "none",
+      "condition_value": "",
+      "converters": [
+        {
+          "config": {},
+          "type": "syslog_pri_facility"
+        }
+      ],
+      "cursor_strategy": "copy",
+      "extractor_config": {
+        "regex_value": "^<(\\d.+)>"
+      },
+      "extractor_type": "regex",
+      "order": 0,
+      "source_field": "message",
+      "target_field": "facility",
+      "title": "Facility"
+    },
+    {
+      "condition_type": "none",
+      "condition_value": "",
+      "converters": [
+        {
+          "config": {},
+          "type": "syslog_pri_level"
+        }
+      ],
+      "cursor_strategy": "copy",
+      "extractor_config": {
+        "regex_value": "^<(\\d.+)>"
+      },
+      "extractor_type": "regex",
+      "order": 1,
+      "source_field": "message",
+      "target_field": "level",
+      "title": "Level"
+    },
+    {
+      "condition_type": "none",
+      "condition_value": "",
+      "converters": [],
+      "cursor_strategy": "copy",
+      "extractor_config": {
+        "regex_value": ">: (.+?):"
+      },
+      "extractor_type": "regex",
+      "order": 2,
+      "source_field": "message",
+      "target_field": "source",
+      "title": "Source"
+    },
+    {
+      "condition_type": "none",
+      "condition_value": "",
+      "converters": [
+        {
+          "config": {},
+          "type": "flexdate"
+        }
+      ],
+      "cursor_strategy": "copy",
+      "extractor_config": {
+        "regex_value": ">:\\s.+:\\s(.+?):\\s%"
+      },
+      "extractor_type": "regex",
+      "order": 3,
+      "source_field": "message",
+      "target_field": "timestamp",
+      "title": "Timestamp"
+    },
+    {
+      "condition_type": "none",
+      "condition_value": "",
+      "converters": [
+        {
+          "config": {},
+          "type": "lowercase"
+        }
+      ],
+      "cursor_strategy": "copy",
+      "extractor_config": {
+        "regex_value": "%(.+?)-"
+      },
+      "extractor_type": "regex",
+      "order": 4,
+      "source_field": "message",
+      "target_field": "local_facility",
+      "title": "Local facility"
+    },
+    {
+      "condition_type": "none",
+      "condition_value": "",
+      "converters": [
+        {
+          "config": {},
+          "type": "numeric"
+        }
+      ],
+      "cursor_strategy": "copy",
+      "extractor_config": {
+        "regex_value": "%.+-(\\d?)-"
+      },
+      "extractor_type": "regex",
+      "order": 5,
+      "source_field": "message",
+      "target_field": "local_level",
+      "title": "Local level"
+    },
+    {
+      "condition_type": "none",
+      "condition_value": "",
+      "converters": [],
+      "cursor_strategy": "copy",
+      "extractor_config": {
+        "regex_value": "%.+-\\d+-.+: (.*)$"
+      },
+      "extractor_type": "regex",
+      "order": 7,
+      "source_field": "message",
+      "target_field": "message",
+      "title": "Message"
+    },
+    {
+      "condition_type": "none",
+      "condition_value": "",
+      "converters": [
+        {
+          "config": {},
+          "type": "lowercase"
+        }
+      ],
+      "cursor_strategy": "copy",
+      "extractor_config": {
+        "regex_value": "%.+-\\d-(.+?):"
+      },
+      "extractor_type": "regex",
+      "order": 6,
+      "source_field": "message",
+      "target_field": "mnemonic",
+      "title": "Mnemonic"
+    }
+  ],
+  "version": "0.20.2"
+}
