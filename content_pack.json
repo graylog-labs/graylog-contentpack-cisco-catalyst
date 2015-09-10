@@ -1,0 +1,145 @@
+{
+  "id" : null,
+  "name" : "Cisco Catalyst",
+  "description" : "This content pack will spawn a Graylog message input on UDP port 11001 and properly parse messages from your Cisco Catalyst devices. Configure your Catalyst devices to send syslog messages to this port.",
+  "category" : "Switches",
+  "inputs" : [ {
+    "title" : "Cisco Catalyst",
+    "configuration" : {
+      "override_source" : "",
+      "recv_buffer_size" : 262144,
+      "bind_address" : "0.0.0.0",
+      "port" : 11001
+    },
+    "type" : "org.graylog2.inputs.raw.udp.RawUDPInput",
+    "global" : false,
+    "extractors" : [ {
+      "title" : "Facility",
+      "type" : "REGEX",
+      "configuration" : {
+        "regex_value" : "^<(\\d.+)>"
+      },
+      "converters" : [ {
+        "type" : "SYSLOG_PRI_FACILITY",
+        "configuration" : { }
+      } ],
+      "order" : 0,
+      "cursor_strategy" : "COPY",
+      "target_field" : "facility",
+      "source_field" : "message",
+      "condition_type" : "NONE",
+      "condition_value" : ""
+    }, {
+      "title" : "Level",
+      "type" : "REGEX",
+      "configuration" : {
+        "regex_value" : "^<(\\d.+)>"
+      },
+      "converters" : [ {
+        "type" : "SYSLOG_PRI_LEVEL",
+        "configuration" : { }
+      } ],
+      "order" : 1,
+      "cursor_strategy" : "COPY",
+      "target_field" : "level",
+      "source_field" : "message",
+      "condition_type" : "NONE",
+      "condition_value" : ""
+    }, {
+      "title" : "Source",
+      "type" : "REGEX",
+      "configuration" : {
+        "regex_value" : ">: (.+?):"
+      },
+      "converters" : [ ],
+      "order" : 2,
+      "cursor_strategy" : "COPY",
+      "target_field" : "source",
+      "source_field" : "message",
+      "condition_type" : "NONE",
+      "condition_value" : ""
+    }, {
+      "title" : "Timestamp",
+      "type" : "REGEX",
+      "configuration" : {
+        "regex_value" : ">:\\s.+:\\s(.+?):\\s%"
+      },
+      "converters" : [ {
+        "type" : "FLEXDATE",
+        "configuration" : { }
+      } ],
+      "order" : 3,
+      "cursor_strategy" : "COPY",
+      "target_field" : "timestamp",
+      "source_field" : "message",
+      "condition_type" : "NONE",
+      "condition_value" : ""
+    }, {
+      "title" : "Local facility",
+      "type" : "REGEX",
+      "configuration" : {
+        "regex_value" : "%(.+?)-"
+      },
+      "converters" : [ {
+        "type" : "LOWERCASE",
+        "configuration" : { }
+      } ],
+      "order" : 4,
+      "cursor_strategy" : "COPY",
+      "target_field" : "local_facility",
+      "source_field" : "message",
+      "condition_type" : "NONE",
+      "condition_value" : ""
+    }, {
+      "title" : "Local level",
+      "type" : "REGEX",
+      "configuration" : {
+        "regex_value" : "%.+-(\\d?)-"
+      },
+      "converters" : [ {
+        "type" : "NUMERIC",
+        "configuration" : { }
+      } ],
+      "order" : 5,
+      "cursor_strategy" : "COPY",
+      "target_field" : "local_level",
+      "source_field" : "message",
+      "condition_type" : "NONE",
+      "condition_value" : ""
+    }, {
+      "title" : "Message",
+      "type" : "REGEX",
+      "configuration" : {
+        "regex_value" : "%.+-\\d+-.+: (.*)$"
+      },
+      "converters" : [ ],
+      "order" : 7,
+      "cursor_strategy" : "COPY",
+      "target_field" : "message",
+      "source_field" : "message",
+      "condition_type" : "NONE",
+      "condition_value" : ""
+    }, {
+      "title" : "Mnemonic",
+      "type" : "REGEX",
+      "configuration" : {
+        "regex_value" : "%.+-\\d-(.+?):"
+      },
+      "converters" : [ {
+        "type" : "LOWERCASE",
+        "configuration" : { }
+      } ],
+      "order" : 6,
+      "cursor_strategy" : "COPY",
+      "target_field" : "mnemonic",
+      "source_field" : "message",
+      "condition_type" : "NONE",
+      "condition_value" : ""
+    } ],
+    "static_fields" : { }
+  } ],
+  "streams" : [ ],
+  "outputs" : [ ],
+  "dashboards" : [ ],
+  "grok_patterns" : [ ]
+}
