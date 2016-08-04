@@ -110,7 +110,7 @@
       "title" : "Message",
       "type" : "REGEX",
       "configuration" : {
-        "regex_value" : "%.+-\\d+-.+: (.*)$"
+        "regex_value" : "%.+-\\d+-\\w: (.*)$"
       },
       "converters" : [ ],
       "order" : 7,
