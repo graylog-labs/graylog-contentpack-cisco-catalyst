@@ -17,7 +17,7 @@
       "title" : "Facility",
       "type" : "REGEX",
       "configuration" : {
-        "regex_value" : "^<(\\d.+)>"
+        "regex_value" : "^<(\\d+)>"
       },
       "converters" : [ {
         "type" : "SYSLOG_PRI_FACILITY",
@@ -33,7 +33,7 @@
       "title" : "Level",
       "type" : "REGEX",
       "configuration" : {
-        "regex_value" : "^<(\\d.+)>"
+        "regex_value" : "^<(\\d+)>"
       },
       "converters" : [ {
         "type" : "SYSLOG_PRI_LEVEL",
